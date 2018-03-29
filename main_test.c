@@ -4,7 +4,7 @@
 #include <math.h>
 #include <time.h>
 
-#include "SDLFUNC.h"
+#include "SDLFUNC.h" //DELETE IF YOU DON'T WANT TO USE SDL2
 #include "RNGTILES.h"
 #include "qdbmp/qdbmp.h"
 
@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 
 	printf("I'm alive yo!\n\nRandom Texture Generator for the RNGShip Generator.\n\n");
 	
-	InitGraphics(SDL_INIT_VIDEO,TEXSZ,TEXSZ);
+	InitGraphics(SDL_INIT_VIDEO,TEXSZ,TEXSZ); //DELETE IF YOU DON'T WANT TO USE SDL2
 	
 	
 	srand(time(NULL));
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 	
 	
 	memcpy(fbuffer,masterTexture,TEXSZ*TEXSZ*sizeof(uint32_t));
-		
+	//DELETE FROM HERE IF YOU DON'T WANT TO USE SDL2----------------
 	while(!mLquit){
 
 		UpdateFB(fbuffer, TEXSZ*sizeof(uint32_t));
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 		SDL_Delay(10);
 		
 	}
-	
+	//TO HERE-----------------------------------------
 	
 	printf("SAVING BITMAP WITH QDBMP BY Chai Braudo!\n\n");
 	BMP* bmp = NULL;
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]){
 	free(masterTexture);
 	free(masterNoise);
 
-	CloseGraphics();
+	CloseGraphics(); //DELETE IF YOU DON'T WANT TO USE SDL2
 
 	return 0;
 }
