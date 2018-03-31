@@ -4,7 +4,6 @@
 #include <math.h>
 #include <time.h>
 
-#include "SDLFUNC.h"
 #include "RNGTILES.h"
 #include "qdbmp/qdbmp.h"
 
@@ -14,30 +13,24 @@ int main(int argc, char* argv[]){
 
 	printf("I'm alive yo!\n\nRandom Texture Generator for the RNGShip Generator.\n\n");
 	
-	InitGraphics(SDL_INIT_VIDEO,TEXSZ,TEXSZ);
-	
 	
 	srand(time(NULL));
 	GenerateMasterBuffers();
+	
+	printf("Generating Fuselage\n");
 	MakeFuselageTile();
+	printf("Generating MechsTop\n");
 	MakeMechanicsTopTile();
+	printf("Generating MechsBot\n");
 	MakeMechanicsBottomTile();
+	printf("Generating Intake\n");
 	MakeIntakeTile();
+	printf("Generating Cockpit\n");
 	MakeCockpitTile();
+	printf("Generating Exhaust\n");
 	MakeExhaustTile();
+	printf("Generating ExhaustInner\n");
 	MakeExhaustInnerTile();
-	
-	
-	
-	memcpy(fbuffer,masterTexture,TEXSZ*TEXSZ*sizeof(uint32_t));
-		
-	while(!mLquit){
-
-		UpdateFB(fbuffer, TEXSZ*sizeof(uint32_t));
-		ParseInput();
-		SDL_Delay(10);
-		
-	}
 	
 	
 	printf("SAVING BITMAP WITH QDBMP BY Chai Braudo!\n\n");
@@ -59,8 +52,6 @@ int main(int argc, char* argv[]){
 	//Clean up
 	free(masterTexture);
 	free(masterNoise);
-
-	CloseGraphics();
 
 	return 0;
 }

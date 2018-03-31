@@ -8,8 +8,8 @@
 #include <SDL2/SDL.h>
 
 
-#define WINWIDTH 128
-#define WINHEIGH 128
+#define WINWIDTH 256
+#define WINHEIGH 256
 
 typedef uint8_t bool;
 bool mLquit; //main loop quit boolean

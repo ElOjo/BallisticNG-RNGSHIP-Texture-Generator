@@ -44,15 +44,15 @@ void MakeMechanicsTopTile(void){
 	uint16_t w=64, h=128;
 	uint32_t* mechbuffer = GenerateBlank(w,h,0x00000000);
 	uint32_t* mechdirtbuffer = GenerateTurbulence(w,h,'w',4);
-	
-	GenerateEngineTube(mechbuffer, w,h);
-	
+
 	uint32_t ntubes = 0;
 	
 	uint8_t dice = rand() % 0xFF; //for RNG
 	
 	float tubeRadius = 0.5f;
 	
+	GenerateEngineTube(mechbuffer, w,h);
+
 	for(ntubes=0;ntubes<20;ntubes++){
 		tubeRadius = 0.05f/(0.5f*ntubes+1.0f);
 		GenerateRandomTubePath(tubeRadius, 3*tubeRadius, 0, 0xFF0000FF, mechbuffer, w,h);
@@ -60,8 +60,10 @@ void MakeMechanicsTopTile(void){
 	}
 	
 	Color_RGBATint(mechbuffer,w,h,1.0f, 1.0f, 1.0f);
-	
+
 	MirrorBuffer(mechbuffer,w,h,'y');
+
+
 	if(dice>0x80){
 		mechDome_t ledome = {0};
 		ledome.radius = 0.10f + (rand() % 10)/100.0f;
@@ -73,19 +75,19 @@ void MakeMechanicsTopTile(void){
 		ledome.color.R = 1.0f;
 		ledome.color.G = 1.0f;
 		ledome.color.B = 1.0f;
-		
+
 		GenerateMechanicsDome(ledome, mechbuffer, w,h);
 	}
-	
+
 	Color_DWLayerMultiply(mechbuffer, mechdirtbuffer,w,h);
 	
 	TileBorder(8, Color_IntensityScale(diffuse2,0.5f), mechbuffer,w,h);
-	
+
 	BlitMasterTexBuffer(mechbuffer,  w,h, 64, 128);
-	
+
 	free(mechdirtbuffer);
 	free(mechbuffer);
-	
+
 }
 
 
@@ -164,6 +166,7 @@ void MakeIntakeTile(void){
 	
 	BlitMasterTexBuffer(intake,w,h,128,192);
 	free(intake);
+	free(dirt);
 }
 
 void MakeExhaustTile(void){
@@ -173,6 +176,7 @@ void MakeExhaustTile(void){
 	uint32_t* exhaust = GenerateBlank(w,h,0xFFFFFFFF);
 	uint32_t* exhdirt = GenerateTurbulence(w,h,'w',4);
 	uint32_t* greeble = GenerateGreebles(8,w,h);
+	
 	
 	Color_RGBATint(exhaust,w,h,0.25f,0.2f,0.15f);
 	AddNoise(0.25f,exhdirt,w,h);
@@ -212,6 +216,7 @@ void MakeExhaustInnerTile(void){
 	
 	BlitMasterTexBuffer(exhaustinner,w,h,192,192);
 	free(exhaustinner);
+	free(dirt);
 }
 
 

@@ -34,6 +34,7 @@ void BlitMasterTexBuffer(uint32_t* tbuffer, uint16_t sx, uint16_t sy, uint16_t x
 		
 	}
 	
+	
 }
 
 uint32_t* GenerateNoise(uint16_t w, uint16_t h){
@@ -46,7 +47,7 @@ uint32_t* GenerateNoise(uint16_t w, uint16_t h){
 	if(pix == NULL){
 		
 		printf("Failed to allocate memory for smooth noise.\n");
-		return NULL;
+		exit(-1);
 		
 	}
 	for(i=0;i<arrsize;i++){
@@ -111,7 +112,7 @@ uint32_t* GenerateTurbulence(uint16_t w, uint16_t h, char col, uint8_t iteration
 	if(pbuffer == NULL){
 		
 		fprintf(stderr,"ERROR ALLOCATING TURBULENCE IMAGE BUFFER MEMORY!\n");
-		return NULL;
+		exit(-1);
 		
 	}
 	
@@ -160,19 +161,20 @@ uint32_t* GenerateBlank(uint16_t w, uint16_t h, uint32_t col){
 	
 	uint32_t* ret = NULL;
 	uint32_t size = w*h, i = 0;
-	
 	ret = malloc(size*sizeof(uint32_t));
-	
+
 	if(ret == NULL){
 		fprintf(stderr,"Error allocating memory for new blank texture...\n");
-		return ret;
+		exit(-1);
 	}
+	
 	
 	for(i=0;i<size;i++){
 		
 		ret[i] = col;
 		
 	}
+	
 	return ret;
 }
 
@@ -384,7 +386,7 @@ void MirrorBuffer(uint32_t* pix, uint16_t w, uint16_t h, char mirroraxis){
 			for(x=0;x<(w>>1);x++){	
 				for(y=0;y<h;y++){
 				
-					pix[(w-x) + y*w] = pix[x + y*w];
+					pix[(w-x-1) + y*w] = pix[x + y*w];
 				
 				}
 			}
@@ -396,7 +398,6 @@ void MirrorBuffer(uint32_t* pix, uint16_t w, uint16_t h, char mirroraxis){
 				
 				memcpy(pix + (h-1-y)*w,pix + y*w,w*sizeof(uint32_t));
 					
-				
 			}
 			break;
 		
@@ -956,6 +957,10 @@ void TileBorder(uint16_t thickness, RGBAcol_t color, uint32_t* pix, uint16_t w, 
 			right--;
 			top++;
 			bottom--;
+			
+			if(left==right || top==bottom){
+				break;
+			}
 		}
 	}
 	
@@ -1186,11 +1191,10 @@ void RectInnerShadow(intrect_t rect, uint16_t thickness, uint32_t* pix, uint16_t
 	uint16_t cur_thicc = 0;
 	uint16_t max_thicc = (w < h ? w : h); // set max thickness as half of the smallest of the two tile dimensions
 	
-	uint16_t left = rect.x0, right = rect.x1, top = rect.y0, bottom = rect.y1-1; 
+	uint16_t left = rect.x0, right = rect.x1-1, top = rect.y0, bottom = rect.y1-1; 
 	uint16_t x,y;
 	
 	uint8_t shadowThickness = thickness;
-	uint8_t dropShadow = 1;
 	RGBAcol_t pixColor;
 	float shadowIntensity, shadVal = 0.3f;
 	
@@ -1238,6 +1242,10 @@ void RectInnerShadow(intrect_t rect, uint16_t thickness, uint32_t* pix, uint16_t
 		right--;
 		top++;
 		bottom--;
+		
+		if(left==right || top==bottom){
+			break;
+		}
 	}
 	
 	
@@ -1260,7 +1268,7 @@ uint32_t* GenerateGreebles(uint16_t ndivisions, uint16_t w, uint16_t h){
 	
 	if(greebleGrid == NULL){
 		fprintf(stderr,"Failed to generate greeble grid\n");
-		return pix;
+		exit(-1);
 		
 	}
 	
@@ -1274,10 +1282,10 @@ uint32_t* GenerateGreebles(uint16_t ndivisions, uint16_t w, uint16_t h){
 	intrect_t panel = {0, 0, dw,dh};
 	
 	pix = GenerateBlank(w,h,0xFF808080);
-	
+
 	if(pix == NULL){
 		fprintf(stderr,"ERROR ALLOC: greebles\n");
-		return pix;
+		exit(-1);
 	}
 	
 	for(j=0;j<ndivisions;j++){
@@ -1327,11 +1335,12 @@ uint32_t* GenerateGreebles(uint16_t ndivisions, uint16_t w, uint16_t h){
 			
 			if(isdoubleW)
 				i++;	
+			
 		}
 	}
 	
 	
 	free(greebleGrid);
-	
+
 	return pix;
 }
