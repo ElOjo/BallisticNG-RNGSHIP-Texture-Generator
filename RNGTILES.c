@@ -147,14 +147,14 @@ void MakeIntakeTile(void){
 		
 		if(i%24 == 0 && i>0){
 			DrawLine(i,0,0,i,0xFFFFFFFF,intake,w,h);
-			DrawLine(0,w-i,i,h,0xFFFFFFFF,intake,w,h);
+			DrawLine(0,w-i-1,i,h,0xFFFFFFFF,intake,w,h);
 			
-			DrawLine(w-i,w,h,h-i,0xFFFFFFFF,intake,w,h);
-			DrawLine(i,0,w,h-i,0xFFFFFFFF,intake,w,h);
+			DrawLine(w-i-1,w-1,h,h-i-1,0xFFFFFFFF,intake,w,h);
+			DrawLine(i,0,w-1,h-i-1,0xFFFFFFFF,intake,w,h);
 		}
 	}
-	DrawLine(0,0,w,h,0xFFFFFFFF,intake,w,h);
-	DrawLine(0,h,w,0,0xFFFFFFFF,intake,w,h);
+	DrawLine(0,0,w-1,h-1,0xFFFFFFFF,intake,w,h);
+	DrawLine(0,h-1,w-1,0,0xFFFFFFFF,intake,w,h);
 	
 	LinearMotionBlur(M_PI/2.0f,2,intake,w,h);
 	Color_DWLayerMultiply(intake,dirt,w,h);
