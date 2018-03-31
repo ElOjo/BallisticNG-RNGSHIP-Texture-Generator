@@ -1,18 +1,18 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main_test.c SDLFUNC.c RNGTEXGEN.c RNGTILES.c VECMATHS.c qdbmp/qdbmp.c
+OBJS = main_testWin_noSDL2.c RNGTEXGEN.c RNGTILES.c VECMATHS.c qdbmp/qdbmp.c
 
 #CC specifies which compiler
-CC = gcc
+CC = i686-w64-mingw32-gcc
 
 #COMPILER FLAGS specifies the additional compilation options
 #-w supresses all warnings
 COMPILER_FLAGS = 
 
 #LINKER FLAGS specifies the libraries we're linking
-LINKER_FLAGS = -lm -lSDL2
+LINKER_FLAGS = -lm
 
 #OBJ_NAME specifies the name of the executable
-OBJ_NAME = RNGTEXLin
+OBJ_NAME = RNGSHIPWin.exe
 
 #Target to compile executable
 all : $(OBJS)
