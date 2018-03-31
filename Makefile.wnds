@@ -12,7 +12,7 @@ COMPILER_FLAGS =
 LINKER_FLAGS = -lm
 
 #OBJ_NAME specifies the name of the executable
-OBJ_NAME = RNGSHIPWin.exe
+OBJ_NAME = RNGTEXGENWin.exe
 
 #Target to compile executable
 all : $(OBJS)
